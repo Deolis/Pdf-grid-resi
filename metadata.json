@@ -1,0 +1,5 @@
+{
+  "name": "PDF Grid Stitcher",
+  "description": "A productivity tool to merge 9 PDF documents into a single A4 page with a 3x3 grid layout.",
+  "requestFramePermissions": []
+}
