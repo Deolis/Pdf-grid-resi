@@ -9,6 +9,7 @@ export default function App() {
   const [files, setFiles] = useState<GridFile[]>([]);
   const [status, setStatus] = useState<ProcessingStatus>(ProcessingStatus.IDLE);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
+  const [exportName, setExportName] = useState<string>("grid-layout");
   
   const handleFilesSelected = useCallback((newFiles: File[]) => {
     if (files.length >= 9) {
@@ -131,6 +132,25 @@ export default function App() {
              <div className="space-y-4">
                 <h2 className="text-lg font-semibold text-slate-800">Actions</h2>
                 
+                <div>
+                  <label htmlFor="filename" className="block text-sm font-medium text-slate-700 mb-1">
+                    Export Filename
+                  </label>
+                  <div className="flex rounded-lg shadow-sm">
+                    <input
+                      type="text"
+                      id="filename"
+                      value={exportName}
+                      onChange={(e) => setExportName(e.target.value)}
+                      className="flex-1 block w-full min-w-0 rounded-l-lg border-slate-300 border px-3 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500 outline-none"
+                      placeholder="grid-layout"
+                    />
+                    <span className="inline-flex items-center rounded-r-lg border border-l-0 border-slate-300 bg-slate-50 px-3 text-slate-500 sm:text-sm">
+                      .pdf
+                    </span>
+                  </div>
+                </div>
+
                 <button
                   onClick={handleGenerate}
                   disabled={files.length === 0 || status === ProcessingStatus.PROCESSING}
@@ -170,7 +190,7 @@ export default function App() {
                 {generatedUrl && (
                   <a
                     href={generatedUrl}
-                    download="grid-layout.pdf"
+                    download={`${exportName.trim() || 'grid-layout'}.pdf`}
                     className="block w-full"
                   >
                     <button className="w-full py-4 px-6 rounded-xl font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition-colors flex items-center justify-center space-x-2">
